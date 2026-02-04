@@ -1,4 +1,4 @@
-import { readJsonFile } from "../utils/filesManagement";
+import { readJsonFile } from "../utils/filesManagement.js";
 import { fileURLToPath } from "node:url";
 import { v4 as uuidv4 } from "uuid";
 import path from "node:path";
