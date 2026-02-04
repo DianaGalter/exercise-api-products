@@ -11,6 +11,7 @@ let products = [];
 export const fetchProducts = async (req, res) => {
   const data = await readJsonFile(filePath);
   products = [...data];
+  console.log("products: ", products);
   res.status(200).send(products);
 };
 
@@ -19,6 +20,7 @@ export const fetchProduct = async (req, res) => {
     const { id } = req.params;
     const data = await readJsonFile(filePath);
     products = [...data];
+    console.log("products: ", products);
     const product_exist = products.filter((product) => product.id === id);
 
     if (!(product_exist.length > 0)) {

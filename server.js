@@ -11,4 +11,6 @@ app.use("/", (req, res) => {
   res.send("fallback..404 - not found");
 });
 
-app.listen(3000);
+app.listen(3000, () => {
+  console.log("Server is running...");
+});
