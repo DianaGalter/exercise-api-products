@@ -1,4 +1,4 @@
-import { readJsonFile } from "../utils/filesManagement.js";
+import { readJsonFile, writeJsonFile } from "../utils/filesManagement.js";
 import { fileURLToPath } from "node:url";
 import { v4 as uuidv4 } from "uuid";
 import path from "node:path";
@@ -11,7 +11,6 @@ let products = [];
 export const fetchProducts = async (req, res) => {
   const data = await readJsonFile(filePath);
   products = [...data];
-  console.log("products: ", products);
   res.status(200).send(products);
 };
 
@@ -20,11 +19,9 @@ export const fetchProduct = async (req, res) => {
     const { id } = req.params;
     const data = await readJsonFile(filePath);
     products = [...data];
-    console.log("products: ", products);
     const product_exist = products.filter((product) => product.id === id);
 
     if (!(product_exist.length > 0)) {
-      console.log("product_exist: ", product_exist);
       throw new Error("Product not found");
     }
     res.status(200).send(product_exist[0]);
@@ -36,6 +33,8 @@ export const fetchProduct = async (req, res) => {
 export const newProduct = async (req, res) => {
   try {
     const { name, price, category } = req.body;
+    const data = await readJsonFile(filePath);
+    products = [...data];
     products.push({
       id: uuidv4(),
       name,
