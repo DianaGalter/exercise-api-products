@@ -10,19 +10,19 @@ import { validateProduct } from "../middlewares/products.middleware.js";
 const router = express.Router();
 
 router.get(
-  "/products",
+  "/",
   (req, res, next) => {
     next();
   },
   fetchProducts,
 );
 
-router.get("/products/:id", fetchProduct);
+router.get("/:id", fetchProduct);
 
-router.post("/products", validateProduct, newProduct);
+router.post("/", validateProduct, newProduct);
 
-router.patch("/products/:id", validateProduct, updateProduct);
+router.patch("/:id", validateProduct, updateProduct);
 
-router.delete("/products/:id", deleteProduct);
+router.delete("/:id", deleteProduct);
 
 export default router;
