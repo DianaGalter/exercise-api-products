@@ -50,16 +50,28 @@ export const newProduct = async (req, res) => {
 };
 
 export const updateProduct = async (req, res) => {
-  const { id } = req.params;
-  const products = await readJsonFile(filePath);
+  try {
+    const { id } = req.params;
 
-  const index = products.findIndex((product) => product.id === id);
-  if (index === null) throw new Error("Product not found");
-  products[index] = {
-    ...products[index],
-    ...req.body,
-  };
-  res.status(200).send(`Product with id: ${id} updated successfully`);
+    if (!req.body || Object.keys(req.body).length === 0) {
+      throw new Error("Request body cannot be empty");
+    }
+
+    const data = await readJsonFile(filePath);
+    products = [...data];
+
+    const index = products.findIndex((product) => product.id === id);
+    if (index === -1) throw new Error("Product not found");
+
+    products[index] = {
+      ...products[index],
+      ...req.body,
+    };
+    await writeJsonFile(filePath, products);
+    res.status(200).send(`Product with id: ${id} updated successfully`);
+  } catch (error) {
+    res.status(400).send(error.message || error);
+  }
 };
 
 export const deleteProduct = async (req, res) => {
