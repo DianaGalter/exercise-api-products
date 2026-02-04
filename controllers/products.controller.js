@@ -42,7 +42,11 @@ export const newProduct = async (req, res) => {
       category,
     });
     await writeJsonFile(filePath, products);
-    res.status(201).send(`Product created with name: ${name}, price: ${price}`);
+    res
+      .status(201)
+      .send(
+        `Product created with name: ${name}, price: ${price}, category: ${category}`,
+      );
   } catch (error) {
     console.log(error);
     res.send("Error creating a new product");

@@ -6,7 +6,10 @@ import {
   updateProduct,
   deleteProduct,
 } from "../controllers/products.controller.js";
-import { validateProduct } from "../middlewares/products.middleware.js";
+import {
+  validateProduct,
+  validateProductUpdate,
+} from "../middlewares/products.middleware.js";
 const router = express.Router();
 
 router.get(
@@ -21,8 +24,7 @@ router.get("/:id", fetchProduct);
 
 router.post("/", validateProduct, newProduct);
 
-router.patch("/:id", validateProduct, updateProduct);
-
+router.patch("/:id", validateProductUpdate, updateProduct);
 router.delete("/:id", deleteProduct);
 
 export default router;
